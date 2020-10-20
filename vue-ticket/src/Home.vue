@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-      <div class="wrapper" v-if="render">
+      <div class="wrapper">
           <div class="box" v-if="login">
               <h1>Helo Mr. {{this.user.name}}</h1>
                 <div class="d-flex justify-content-center">

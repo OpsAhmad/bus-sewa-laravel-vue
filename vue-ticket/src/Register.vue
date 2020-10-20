@@ -3,8 +3,15 @@
        <div class="wrapper">
           <div class="box">
               <h1>Register</h1>
-              <form action="" method="post" @submit.prevent="submit">
-              <input type="text" name="name" v-model="user.name" placeholder="name">
+            <div class="error" v-if="Object.keys(error).length > 0">
+                <div class="error-item text-danger" v-for="key in Object.keys(error)" :key="key">
+                    {{error[key][0]}}
+                </div>
+            </div>
+              <form action="" method="post" @submit.prevent="submit" class="form">
+                <div class="form-group">
+              <input type="text" name="name" v-model="user.name" class="form-control" placeholder="name">
+                </div>
               <br>
               <br>
               <input type="email" name="email" v-model="user.email" placeholder="email">
@@ -33,17 +40,21 @@ export default {
     data:function()
     {
         return{
-            user:{}
+            user:{},
+            error:{}
         }
     },
     methods:{
         submit(){
-            this.$axios.post('http://127.0.0.1:8000/user/register',this.user).then((response)=>{
+            this.$axios.post('http://127.0.0.1:8000/user/register',this.user)
+            .then((response)=>{
                localStorage.setItem('remember_token',response.data.remember_token);
                alert('successful register');
                this.$router.push({name:"home"});
-            }).catch(()=>{
-                alert('error');
+            }).catch((error)=>{
+                this.error = error.response.data
+                console.log(error.response);
+                // alert('error');
             })
         }
     }

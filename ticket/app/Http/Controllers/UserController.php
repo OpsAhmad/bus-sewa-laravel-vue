@@ -31,7 +31,7 @@ class UserController extends Controller
         ]);
 
         if ($v->fails()) {
-            return response()->json($v->errors(), 400);
+            return response()->json($v->errors(), 422);
         }
 
         $data = [
